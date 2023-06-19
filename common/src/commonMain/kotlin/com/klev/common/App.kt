@@ -45,12 +45,10 @@ private fun TikTakToe(initialState: TikTakToeState) {
                 modifier = Modifier
                     .border(2.dp, Color(186, 185, 222, 255))
                     .height(180.dp)
-                    .clickable {
-                        if (bannerText.isEmpty() && square.symbol == Symbol.EMPTY) {
-                            state = TikTakToeService.update(state, square, xTurn)
-                            xTurn = xTurn.not()
-                            bannerText = TikTakToeService.bannerText(state)
-                        }
+                    .clickable(enabled = bannerText.isEmpty() && square.symbol == Symbol.EMPTY) {
+                        state = TikTakToeService.update(state, square, xTurn)
+                        xTurn = xTurn.not()
+                        bannerText = TikTakToeService.bannerText(state)
                     },
                 contentAlignment = Alignment.Center
             ) {

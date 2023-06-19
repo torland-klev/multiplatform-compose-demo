@@ -4,7 +4,7 @@ import com.klev.common.App
 
 
 fun main() = application {
-    Window(onCloseRequest = ::exitApplication) {
+    Window(onCloseRequest = ::exitApplication, title = "Pretend like you read something funny") {
         App()
     }
 }
