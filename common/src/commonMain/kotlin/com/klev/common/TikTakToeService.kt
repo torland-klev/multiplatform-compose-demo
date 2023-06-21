@@ -42,6 +42,7 @@ object TikTakToeService {
     }
 
     fun update(state: TikTakToeState, square: Square, xTurn: Boolean): TikTakToeState = state.copy(squares = state.squares.filterNot { it == square } + square.copy(symbol = if (xTurn) Symbol.CROSS else Symbol.CIRCLE))
+    fun sorted(squares: List<Square>) = squares.sortedWith(compareBy<Square> { it.y }.thenBy { it.x })
 
     enum class BoardState {
         DRAW,
