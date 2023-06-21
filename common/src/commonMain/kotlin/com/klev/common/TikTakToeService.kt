@@ -31,17 +31,22 @@ object TikTakToeService {
     private fun checkDiagonalUpDown(state: TikTakToeState) = state.squares.filter { it.x == it.y }.check()
 
     private fun checkDiagonalDownUp(state: TikTakToeState) = state.squares.filter { it.x + it.y == 2 }.check()
-    private fun List<Square>.check() = if (this.all { it.symbol == Symbol.CROSS }) BoardState.VICTORY_X else if (this.all { it.symbol == Symbol.CIRCLE }) BoardState.VICTORY_O else if (this.any { it.symbol == Symbol.EMPTY }) BoardState.IN_PROGRESS else BoardState.DRAW
-    private fun Map<Int, List<Square>>.check() = if (this.any { it.value.all { it.symbol == Symbol.CROSS } }) BoardState.VICTORY_X else if (this.any { it.value.all { it.symbol == Symbol.CIRCLE } }) BoardState.VICTORY_O else if (this.any { it.value.any { it.symbol == Symbol.EMPTY } }) BoardState.IN_PROGRESS else BoardState.DRAW
+    private fun List<Square>.check() =
+        if (this.all { it.symbol == Symbol.CROSS }) BoardState.VICTORY_X else if (this.all { it.symbol == Symbol.CIRCLE }) BoardState.VICTORY_O else if (this.any { it.symbol == Symbol.EMPTY }) BoardState.IN_PROGRESS else BoardState.DRAW
+
+    private fun Map<Int, List<Square>>.check() =
+        if (this.any { it.value.all { it.symbol == Symbol.CROSS } }) BoardState.VICTORY_X else if (this.any { it.value.all { it.symbol == Symbol.CIRCLE } }) BoardState.VICTORY_O else if (this.any { it.value.any { it.symbol == Symbol.EMPTY } }) BoardState.IN_PROGRESS else BoardState.DRAW
 
     fun bannerText(state: TikTakToeState) = when (checkState(state)) {
-            BoardState.DRAW -> "DRAW"
-            BoardState.IN_PROGRESS -> ""
-            BoardState.VICTORY_X -> "Congratulations, X!"
-            BoardState.VICTORY_O -> "Congratulations, O!"
+        BoardState.DRAW -> "DRAW"
+        BoardState.IN_PROGRESS -> ""
+        BoardState.VICTORY_X -> "Congratulations, X!"
+        BoardState.VICTORY_O -> "Congratulations, O!"
     }
 
-    fun update(state: TikTakToeState, square: Square, xTurn: Boolean): TikTakToeState = state.copy(squares = state.squares.filterNot { it == square } + square.copy(symbol = if (xTurn) Symbol.CROSS else Symbol.CIRCLE))
+    fun update(state: TikTakToeState, square: Square, xTurn: Boolean): TikTakToeState =
+        state.copy(squares = state.squares.filterNot { it == square } + square.copy(symbol = if (xTurn) Symbol.CROSS else Symbol.CIRCLE))
+
     fun sorted(squares: List<Square>) = squares.sortedWith(compareBy<Square> { it.y }.thenBy { it.x })
 
     enum class BoardState {
